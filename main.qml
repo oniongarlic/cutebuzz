@@ -7,9 +7,9 @@ import org.tal.buzz 1.0
 
 ApplicationWindow {
     visible: true
-    width: 800
-    height: 640
-    title: qsTr("Buzz!")
+    width: 1280
+    height: 720
+    title: qsTr("CuteBuzz!")
 
     property int tsec: 10
 
@@ -18,8 +18,9 @@ ApplicationWindow {
     property variant playerStats;
 
     Component.onCompleted: {
-        gb.start("/dev/input/event18");
-        //gb.start("");
+        //gb.start("/dev/input/event18");
+
+        gb.start(""); // Probe it
 
         clearScores();
     }
@@ -42,6 +43,21 @@ ApplicationWindow {
     SoundEffect {
         id: audioBad
         source: "sounds/hit2.wav"
+    }
+
+    SoundEffect {
+        id: audioTick
+        source: "sounds/pickup1.wav"
+    }
+
+    SoundEffect {
+        id: audioTick2
+        source: "sounds/pickup2.wav"
+    }
+
+    SoundEffect {
+        id: audioSlow
+        source: "sounds/hit1.wav"
     }
 
     GameBuzz {
@@ -284,6 +300,11 @@ ApplicationWindow {
             if (tsec==0) {
                 playerTurn=0;
                 t.stop()
+                audioSlow.play()
+            } else if (tsec>1){
+                audioTick.play()
+            } else {
+                audioTick2.play()
             }
         }
     }
