@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>sounds/back.wav</file>
+        <file>sounds/bubble.wav</file>
+        <file>sounds/button.wav</file>
+        <file>sounds/hit1.wav</file>
+        <file>sounds/hit2.wav</file>
+        <file>sounds/hithard.wav</file>
+        <file>sounds/hithead.wav</file>
+        <file>sounds/jump1.wav</file>
+        <file>sounds/jump2.wav</file>
+        <file>sounds/menu.wav</file>
+        <file>sounds/pickup1.wav</file>
+        <file>sounds/pickup2.wav</file>
+    </qresource>
+</RCC>
