@@ -238,6 +238,8 @@ void GameBuzz::closeDevice() {
     if (input_fd>0) {
         qDebug("Closing input device");
         m_ev_notifier->disconnect();
+        delete m_ev_notifier;
+        m_ev_notifier=nullptr;
         libevdev_grab(edev, LIBEVDEV_UNGRAB);
         close(input_fd);
         libevdev_free(edev);
