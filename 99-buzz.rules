@@ -1,0 +1,8 @@
+# Buzz controller, allow users access to them
+# 054c:0002
+
+# Input device
+SUBSYSTEM=="input", ENV{ID_MODEL}=="Logitech_Buzz_tm__Controller_V1", ACTION=="add", KERNEL=="event[0-9]*", MODE="0664", GROUP="plugdev"
+
+# Leds
+SUBSYSTEM=="leds", KERNEL=="0003:054C:*::buzz[1-4]", ACTION=="add", RUN+="/bin/chmod a+rw /sys/class/leds/%k/brightness"
