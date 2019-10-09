@@ -144,9 +144,16 @@ ApplicationWindow {
             }
 
             Text {
+                visible: !t.running  && playerTurn==0
+                anchors.centerIn: parent
+                text: "Buzz to start!"
+                font.pixelSize: 60
+            }
+
+            Text {
                 id: playerBuzzed
                 anchors.centerIn: parent
-                visible: !t.running
+                visible: !t.running && playerTurn>0
                 font.pixelSize: 60
                 text: ""
             }
