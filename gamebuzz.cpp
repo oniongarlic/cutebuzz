@@ -34,15 +34,16 @@ GameBuzz::GameBuzz(QObject *parent) :
     qDebug() << "LEDS" << m_ledmap;
 }
 
-bool GameBuzz::start(const QString device) {
+bool GameBuzz::start(const QString device)
+{
     QStringList devices;
 
     m_device=device;
 
     udev = udev_new();
-    if (!udev) {        
+    if (!udev) {
         qWarning("Failed to init udev, unable to probe or monitor for buzz device changes");
-        have_udev=false;        
+        have_udev=false;
     } else {
         have_udev=true;
         enableUdevMonitoring();
@@ -71,7 +72,8 @@ bool GameBuzz::stop()
     return true;
 }
 
-GameBuzz::~GameBuzz() {
+GameBuzz::~GameBuzz()
+{
     closeDevice();
     if (have_udev) {
         udev_monitor_unref(mon);
@@ -79,12 +81,14 @@ GameBuzz::~GameBuzz() {
     }
 }
 
-void GameBuzz::disableDevice(bool disable) {
+void GameBuzz::disableDevice(bool disable)
+{
     m_enabled=!disable;
 }
 
 
-void GameBuzz::enableUdevMonitoring() {
+void GameBuzz::enableUdevMonitoring()
+{
     mon = udev_monitor_new_from_netlink(udev, "udev");
     udev_monitor_filter_add_match_subsystem_devtype(mon, "input", NULL);
     udev_monitor_enable_receiving(mon);
@@ -93,7 +97,8 @@ void GameBuzz::enableUdevMonitoring() {
     connect(m_udev_notifier, SIGNAL(activated(int)), this, SLOT(readUdevMonitor()));
 }
 
-bool GameBuzz::isSuitableInputDevice(int fd) {
+bool GameBuzz::isSuitableInputDevice(int fd)
+{
     struct libevdev *evdev = libevdev_new();
     bool ret=false;
     int err;
@@ -112,7 +117,8 @@ bool GameBuzz::isSuitableInputDevice(int fd) {
     return ret;
 }
 
-QStringList GameBuzz::findInputDevices() {
+QStringList GameBuzz::findInputDevices()
+{
     QStringList foundDevices;
     struct udev_enumerate *enumerate;
     struct udev_list_entry *devices, *dev_list_entry;
@@ -167,7 +173,8 @@ QStringList GameBuzz::findInputDevices() {
     return foundDevices;
 }
 
-void GameBuzz::readUdevMonitor() {
+void GameBuzz::readUdevMonitor()
+{
     struct udev_device *dev;
 
     dev = udev_monitor_receive_device(mon);
@@ -197,7 +204,8 @@ void GameBuzz::readUdevMonitor() {
     }
 }
 
-bool GameBuzz::openDevice() {
+bool GameBuzz::openDevice()
+{
     const char *tmp = m_device.toLocal8Bit().data();
     int r=0;
 
@@ -230,11 +238,13 @@ bool GameBuzz::openDevice() {
     return true;
 }
 
-bool GameBuzz::hasDevice() {
+bool GameBuzz::hasDevice()
+{
     return (input_fd>-1) ? false : true;
 }
 
-void GameBuzz::closeDevice() {
+void GameBuzz::closeDevice()
+{
     if (input_fd>0) {
         qDebug("Closing input device");
         m_ev_notifier->disconnect();
@@ -250,7 +260,8 @@ void GameBuzz::closeDevice() {
     }
 }
 
-void GameBuzz::readDevice() {
+void GameBuzz::readDevice()
+{
     struct input_event ev;
     int r;
 
